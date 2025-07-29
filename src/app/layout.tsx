@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/providers";
-import { themeScript } from "@/shared/utils/theme-script";
 
 export const metadata: Metadata = {
   title: "Mi App - Autenticación",
@@ -14,9 +13,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <meta name="theme-color" content="#ffffff" />
         <meta name="color-scheme" content="light dark" />
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body suppressHydrationWarning className="theme-transition">
+      <body suppressHydrationWarning>
         <Providers>
           {children}
         </Providers>

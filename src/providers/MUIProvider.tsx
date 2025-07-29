@@ -6,27 +6,36 @@ import { CssBaseline } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { getTheme } from '@/theme/mui-theme';
 import { useTheme } from '@/shared/context/ThemeContext';
+import LoadingScreen from '@/shared/components/LoadingScreen';
 
 interface MUIProviderProps {
   children: ReactNode;
 }
 
 function MUIThemeProvider({ children }: MUIProviderProps) {
-  const { actualTheme } = useTheme();
-  const [isHydrated, setIsHydrated] = useState(false);
+  const { actualTheme, isHydrated } = useTheme();
+  const [showContent, setShowContent] = useState(false);
   
-  // Marcar como hidratado después del primer render del cliente
+  const theme = getTheme(actualTheme);
+
   useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-  
-  // Durante la hidratación inicial, usar siempre el tema claro para evitar flash
-  const theme = getTheme(isHydrated ? actualTheme : 'light');
+    // Solo mostrar contenido cuando el tema esté completamente hidratado
+    if (isHydrated) {
+      // Pequeño delay para asegurar que el tema se aplique correctamente
+      const timer = setTimeout(() => {
+        setShowContent(true);
+      }, 80);
+      return () => clearTimeout(timer);
+    }
+  }, [isHydrated]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {children}
+      {!showContent && (
+        <LoadingScreen onThemeReady={() => setShowContent(true)} />
+      )}
+      {showContent && children}
     </ThemeProvider>
   );
 }

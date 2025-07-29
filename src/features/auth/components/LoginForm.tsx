@@ -145,15 +145,22 @@ export function LoginForm() {
 
             {/* Divider con "O" */}
             <Box sx={{ my: 3, position: 'relative' }}>
-                <Divider sx={{ borderColor: 'var(--auth-divider-color, #e2e8f0)' }} />
+                <Divider />
                 <Box
                     sx={{
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        bgcolor: 'var(--auth-divider-bg, #ffffff)',
+                        bgcolor: 'background.paper',
                         px: 2,
+                        py: 0.5,
+                        borderRadius: '50%',
+                        minWidth: 32,
+                        height: 32,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                     }}
                 >
                     <Typography 
@@ -161,8 +168,8 @@ export function LoginForm() {
                         color="text.secondary" 
                         sx={{ 
                             fontSize: '12px', 
-                            textTransform: 'uppercase',
-                            fontWeight: 'medium'
+                            fontWeight: 'medium',
+                            lineHeight: 1
                         }}
                     >
                         O
@@ -179,12 +186,11 @@ export function LoginForm() {
                     startIcon={<GoogleIcon />}
                     sx={{
                         py: 1.5,
-                        borderColor: 'var(--auth-border-color, #e2e8f0)',
                         color: 'text.primary',
                         backgroundColor: 'transparent',
                         '&:hover': {
                             borderColor: 'primary.main',
-                            backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(59, 130, 246, 0.08)' : 'rgba(37, 99, 235, 0.04)',
+                            backgroundColor: 'action.hover',
                         }
                     }}
                 >
@@ -198,12 +204,11 @@ export function LoginForm() {
                     startIcon={<GitHubIcon />}
                     sx={{
                         py: 1.5,
-                        borderColor: 'var(--auth-border-color, #e2e8f0)',
                         color: 'text.primary',
                         backgroundColor: 'transparent',
                         '&:hover': {
                             borderColor: 'primary.main',
-                            backgroundColor: (theme) => theme.palette.mode === 'dark' ? 'rgba(59, 130, 246, 0.08)' : 'rgba(37, 99, 235, 0.04)',
+                            backgroundColor: 'action.hover',
                         }
                     }}
                 >
@@ -219,7 +224,7 @@ export function LoginForm() {
                         component={NextLink}
                         href={AUTH_ROUTES.REGISTER}
                         sx={{ 
-                            color: 'var(--auth-link-color, #2563eb)',
+                            color: 'primary.main',
                             fontWeight: 'medium',
                             textDecoration: 'none',
                             '&:hover': {
@@ -236,12 +241,12 @@ export function LoginForm() {
                         component={NextLink}
                         href={AUTH_ROUTES.FORGOT_PASSWORD}
                         sx={{ 
-                            color: 'var(--auth-link-secondary, #64748b)',
+                            color: 'text.secondary',
                             fontSize: '14px',
                             textDecoration: 'none',
                             '&:hover': {
                                 textDecoration: 'underline',
-                                color: 'text.primary'
+                                color: 'primary.main'
                             }
                         }}
                     >

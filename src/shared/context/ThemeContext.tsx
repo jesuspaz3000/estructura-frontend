@@ -9,6 +9,7 @@ interface ThemeContextType {
     actualTheme: 'light' | 'dark';
     setMode: (mode: ThemeMode) => void;
     toggleTheme: () => void;
+    isHydrated: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -122,6 +123,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
                 actualTheme,
                 setMode,
                 toggleTheme,
+                isHydrated,
             }}
         >
             {children}
