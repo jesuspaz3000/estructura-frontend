@@ -41,7 +41,7 @@ export function LoginForm() {
 
     return (
         <Box sx={{ width: '100%', maxWidth: 400, mx: 'auto' }}>
-            <Box component="form" onSubmit={handleSubmit} autoComplete="off" sx={{ width: '100%' }}>
+            <Box component="form" onSubmit={handleSubmit} autoComplete="off" noValidate sx={{ width: '100%' }}>
                 <Stack spacing={3}>
                     {/* Campos ocultos para confundir al navegador */}
                     <input type="text" style={{ display: 'none' }} />
@@ -144,37 +144,12 @@ export function LoginForm() {
             </Box>
 
             {/* Divider con "O" */}
-            <Box sx={{ my: 3, position: 'relative' }}>
-                <Divider />
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        bgcolor: 'background.paper',
-                        px: 2,
-                        py: 0.5,
-                        borderRadius: '50%',
-                        minWidth: 32,
-                        height: 32,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <Typography 
-                        variant="body2" 
-                        color="text.secondary" 
-                        sx={{ 
-                            fontSize: '12px', 
-                            fontWeight: 'medium',
-                            lineHeight: 1
-                        }}
-                    >
-                        O
-                    </Typography>
-                </Box>
+            <Box sx={{ my: 3, display: 'flex', alignItems: 'center', gap: 2, justifyContent: 'center', width: '100%' }}>
+                <Divider sx={{ flex: 1, borderColor: 'divider' }} />
+                <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 'medium' }}>
+                    O
+                </Typography>
+                <Divider sx={{ flex: 1, borderColor: 'divider' }} />
             </Box>
 
             {/* Botones de login social */}

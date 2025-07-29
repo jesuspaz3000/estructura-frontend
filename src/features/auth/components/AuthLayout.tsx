@@ -1,4 +1,7 @@
+"use client";
+
 import { ReactNode } from 'react';
+import { Box, Paper, Typography, Stack } from '@mui/material';
 import { ThemeToggle } from '@/shared/components/ThemeToggle';
 
 interface AuthLayoutProps {
@@ -15,40 +18,92 @@ export function AuthLayout({
     showThemeToggle = true
 }: AuthLayoutProps) {
     return (
-        <div className='min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex flex-col theme-transition'>
+        <Box
+            sx={{
+                minHeight: '100vh',
+                background: (theme) => 
+                    theme.palette.mode === 'dark'
+                        ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)'
+                        : 'linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #e0e7ff 100%)',
+                display: 'flex',
+                flexDirection: 'column',
+                transition: 'background 0.3s ease',
+            }}
+        >
             {/* Header con toggle de tema */}
             {showThemeToggle && (
-                <div className='absolute top-4 right-4 z-10'>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 16,
+                        right: 16,
+                        zIndex: 10,
+                    }}
+                >
                     <ThemeToggle />
-                </div>
+                </Box>
             )}
 
-            <div className='flex-1 flex flex-col items-center justify-center px-4 py-8'>
-                <div className='w-full max-w-md'>
-                    <div className='bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-gray-100 dark:border-slate-700 p-8 theme-transition'>
+            <Box
+                sx={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    px: 2,
+                    py: 4,
+                }}
+            >
+                <Box sx={{ width: '100%', maxWidth: 400 }}>
+                    <Paper
+                        elevation={12}
+                        sx={{
+                            borderRadius: 2,
+                            p: 4,
+                            backgroundColor: 'background.paper',
+                            border: 1,
+                            borderColor: 'divider',
+                        }}
+                    >
                         {(title || subtitle) && (
-                            <div className='text-center mb-8'>
+                            <Box sx={{ textAlign: 'center', mb: 4 }}>
                                 {title && (
-                                    <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2 theme-transition'>
+                                    <Typography
+                                        variant="h3"
+                                        component="h1"
+                                        sx={{
+                                            fontWeight: 'bold',
+                                            color: 'text.primary',
+                                            mb: 1,
+                                            fontSize: { xs: '1.875rem', sm: '2.25rem' },
+                                        }}
+                                    >
                                         {title}
-                                    </h1>
+                                    </Typography>
                                 )}
                                 {subtitle && (
-                                    <p className='text-gray-600 dark:text-gray-300 text-sm leading-relaxed theme-transition'>
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            color: 'text.secondary',
+                                            fontSize: '0.875rem',
+                                            lineHeight: 1.6,
+                                        }}
+                                    >
                                         {subtitle}
-                                    </p>
+                                    </Typography>
                                 )}
-                            </div>
+                            </Box>
                         )}
 
                         {/* Contenido */}
-                        <div className='space-y-6'>
+                        <Stack spacing={3}>
                             {children}
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+                        </Stack>
+                    </Paper>
+                </Box>
+            </Box>
+        </Box>
     )
 }

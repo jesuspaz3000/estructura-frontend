@@ -97,15 +97,17 @@ function ThemeToggleInternal() {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'theme-button',
-                }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                PaperProps={{
-                    sx: {
-                        minWidth: 160,
-                        mt: 1,
+                slotProps={{
+                    list: {
+                        'aria-labelledby': 'theme-button',
+                    },
+                    paper: {
+                        sx: {
+                            minWidth: 160,
+                            mt: 1,
+                        },
                     },
                 }}
             >
