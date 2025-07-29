@@ -1,28 +1,38 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Configuración de modo oscuro basado en clases para Tailwind CSS 4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 body {
   margin: 0;
   padding: 0;
+  font-family: inherit;
+  /* Transición suave solo después del montaje inicial */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: inherit;
+  color: inherit;
 }
 
-* {
-  transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+/* Desactivar transiciones durante la carga inicial */
+html:not(.mounted) * {
+  transition: none !important;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Contenedor principal */
+#__next {
+  min-height: 100vh;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-} */
+/* Clases utilitarias básicas para compatibilidad con Tailwind */
+.theme-transition {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
