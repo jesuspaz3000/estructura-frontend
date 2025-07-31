@@ -37,8 +37,6 @@ export function LoginForm() {
         toggleShowPassword
     } = useLoginForm();
 
-
-
     return (
         <Box sx={{ width: '100%', maxWidth: 400, mx: 'auto' }}>
             <Box component="form" onSubmit={handleSubmit} autoComplete="off" noValidate sx={{ width: '100%' }}>

@@ -1,12 +1,16 @@
+"use client";
+
 import { ReactNode } from "react";
-import DaDashboardContainer from "@/components/dashboard";
-import Header from "@/components/dashboard/header"
+import { DashboardLayoutContainer } from "@/features/dashboard/components/DashboardLayoutContainer";
 
-export default function Layout({ children } : Readonly<{ children: ReactNode; }>) {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
-    <DaDashboardContainer header={<Header />}>
+    <DashboardLayoutContainer>
       {children}
-    </DaDashboardContainer>
-
-  )
+    </DashboardLayoutContainer>
+  );
 }

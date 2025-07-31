@@ -1,3 +1,5 @@
+
+import { ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { validateLoginForm } from '../utils/validation';
@@ -32,7 +34,7 @@ export function useLoginForm() {
     
     // Manejar cambios en inputs
     const handleInputChange = (field: keyof LoginFormData) => (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: ChangeEvent<HTMLInputElement>
     ) => {
         const value = field === 'rememberMe' ? event.target.checked : event.target.value;
         
@@ -58,7 +60,7 @@ export function useLoginForm() {
     };
     
     // Manejar submit del formulario
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         // Validar formulario
