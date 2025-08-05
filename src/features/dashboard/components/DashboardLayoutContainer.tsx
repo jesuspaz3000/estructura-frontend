@@ -1,10 +1,10 @@
 "use client";
 
-import { ReactNode, useState, MouseEvent, useMemo } from 'react';
-import { Box, IconButton, Avatar, Menu, MenuItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import { useColorScheme } from '@mui/material/styles';
-import { 
+import { ReactNode, useMemo, useState, MouseEvent } from 'react';
+import { useTheme as useCustomTheme } from '@/shared/context/ThemeContext';
+import { Box, Typography, IconButton, Avatar, Menu, MenuItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
+import { getTheme } from '@/theme/mui-theme';
+import {
   Dashboard,
   People,
   Settings,
@@ -12,19 +12,17 @@ import {
   Inventory,
   Home,
   Person,
-  AdminPanelSettings,
+  // Notifications,
   AccountCircle,
-  Logout,
-  LightMode,
-  DarkMode,
-  Notifications,
-  Search
+  Logout
 } from '@mui/icons-material';
 import { AppProvider, type Navigation } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { useRouter, usePathname } from 'next/navigation';
+import { ThemeToggle } from '@/shared/components/ThemeToggle';
+import { createTheme } from '@mui/material/styles';
+import Image from 'next/image';
 
-// Configuración de navegación
 const NAVIGATION: Navigation = [
   {
     kind: 'header',
@@ -41,16 +39,16 @@ const NAVIGATION: Navigation = [
     icon: <People />,
   },
   {
-    segment: 'analytics',
-    title: 'Analytics',
-    icon: <Analytics />,
-  },
-  {
     kind: 'divider',
   },
   {
     kind: 'header',
     title: 'Gestión',
+  },
+  {
+    segment: 'analytics',
+    title: 'Analytics',
+    icon: <Analytics />,
   },
   {
     segment: 'inventory',
@@ -73,74 +71,63 @@ const NAVIGATION: Navigation = [
     segment: 'settings',
     title: 'Configuración',
     icon: <Settings />,
-    children: [
-      {
-        segment: 'general',
-        title: 'General',
-        icon: <Settings />,
-      },
-      {
-        segment: 'admin',
-        title: 'Administración',
-        icon: <AdminPanelSettings />,
-      },
-    ],
   },
 ];
 
-// Tema personalizado con transiciones suaves
-const appTheme = createTheme({
-  cssVariables: {
-    colorSchemeSelector: 'data-toolpad-color-scheme',
-  },
-  colorSchemes: { light: true, dark: true },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
+// Hook personalizado para crear el tema integrado con Toolpad
+const createAppTheme = (baseTheme: ReturnType<typeof getTheme>) => {
+  return createTheme({
+    ...baseTheme,
+    cssVariables: {
+      colorSchemeSelector: 'data-toolpad-color-scheme',
     },
-  },
-  components: {
-    // Personalizar el comportamiento del sidebar de Toolpad
-    MuiDrawer: {
-      styleOverrides: {
-        root: {
-          '& .MuiDrawer-paper': {
-            transition: 'all 0.225s cubic-bezier(0.0, 0, 0.2, 1) 0ms !important',
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+      },
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            // Personalizar estilos para el botón
           },
         },
-        paper: {
-          transition: 'all 0.225s cubic-bezier(0.0, 0, 0.2, 1) 0ms !important',
+      },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            display: 'none !important',
+          },
         },
       },
     },
-    // Ocultar tooltips globalmente
-    MuiTooltip: {
-      styleOverrides: {
-        tooltip: {
-          display: 'none !important',
-        },
-      },
-    },
-  },
-});
+  })
+}
 
-// Componente de cambio de tema
-function ThemeSwitcher() {
-  const { mode, setMode } = useColorScheme();
-
-  const toggleMode = () => {
-    setMode(mode === 'light' ? 'dark' : 'light');
-  };
-
+function DemoPageContent({ pathname }: { pathname: string }) {
   return (
-    <IconButton onClick={toggleMode} color="inherit" size="large">
-      {mode === 'light' ? <DarkMode /> : <LightMode />}
-    </IconButton>
+    <Box
+      sx={{
+        py: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+      }}
+    >
+      <Typography>Dashboard content for {pathname}</Typography>
+    </Box>
   );
+}
+
+// Componente de cambio de tema mejorado
+function ThemeSwitcher() {
+  return <ThemeToggle />;
 }
 
 // Componente de menú de usuario
@@ -173,13 +160,20 @@ function UserMenu() {
       <IconButton
         onClick={handleClick}
         size="small"
-        sx={{ ml: 1 }}
-        aria-controls={open ? 'user-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+        sx={{
+          ml: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'row',
+          gap: 2,
+          borderRadius: 1,
+          paddingX: 2,
+        }}
       >
+        <Typography variant="body2">user name</Typography>
         <Avatar sx={{ width: 32, height: 32 }}>
-          <AccountCircle />
+          <Image src="/image/perfil.jpeg" alt="Perfil" width={32} height={32} />
         </Avatar>
       </IconButton>
 
@@ -191,10 +185,12 @@ function UserMenu() {
         onClick={handleClose}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        sx={{
-          '& .MuiPaper-root': {
-            minWidth: 200,
-            mt: 1.5,
+        slotProps={{
+          paper: {
+            sx: {
+              minWidth: 200,
+              mt: 1.5,
+            },
           },
         }}
       >
@@ -204,16 +200,16 @@ function UserMenu() {
           </ListItemIcon>
           <ListItemText>Mi Perfil</ListItemText>
         </MenuItem>
-        
+
         <MenuItem onClick={handleSettings}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           <ListItemText>Configuración</ListItemText>
         </MenuItem>
-        
+
         <Divider />
-        
+
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
@@ -246,49 +242,72 @@ interface DashboardLayoutProps {
 
 export function DashboardLayoutContainer({ children }: DashboardLayoutProps) {
   const router = useToolpadRouter();
+  const { actualTheme } = useCustomTheme();
+  const baseTheme = getTheme(actualTheme);
+  const toolpadTheme = createAppTheme(baseTheme);
 
   return (
     <AppProvider
       navigation={NAVIGATION}
       router={router}
-      theme={appTheme}
+      theme={toolpadTheme}
       branding={{
         title: 'Mi App',
-        // logo: <img src="/logo.png" alt="Logo" style={{ height: 32 }} />, // Opcional
+        logo: <Image src="/image/logo-dragon.png" alt="Logo" width={40} height={40} className='bg-white rounded-full p-1 mr-2' />,
       }}
     >
       <DashboardLayout
+        sx={{
+          padding: 2,
+          '& .MuiDrawer-paper': {
+            '& .MuiList-root': {
+              '& .MuiListItemButton-root': {
+                marginBottom: '8px',
+                '&.Mui-selected': {
+                  backgroundColor: toolpadTheme.palette.mode === 'dark'
+                    ? 'rgba(255, 255, 255, 0.08) !important'
+                    : 'rgba(0, 0, 0, 0.08) !important',
+                  color: `${toolpadTheme.palette.primary.main} !important`,
+                  '& .MuiListItemIcon-root': {
+                    color: `${toolpadTheme.palette.primary.main} !important`,
+                    '& .MuiSvgIcon-root': {
+                      color: `${toolpadTheme.palette.primary.main} !important`,
+                    },
+                  },
+                  '& .MuiListItemText-root .MuiTypography-root': {
+                    color: `${toolpadTheme.palette.primary.main} !important`,
+                  },
+                  '&:hover': {
+                    backgroundColor: toolpadTheme.palette.mode === 'dark'
+                      ? 'rgba(255, 255, 255, 0.12) !important'
+                      : 'rgba(0, 0, 0, 0.12) !important',
+                    color: `${toolpadTheme.palette.primary.main} !important`,
+                  },
+                },
+              },
+            }
+          }
+        }}
         slots={{
           toolbarActions: () => (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {/* Botón de búsqueda */}
-              <IconButton color="inherit" size="large">
-                <Search />
-              </IconButton>
 
               {/* Notificaciones */}
-              <IconButton color="inherit" size="large">
+              {/* <IconButton color="inherit" size="large">
                 <Notifications />
-              </IconButton>
+              </IconButton> */}
+
+              {/* Menú de usuario */}
+              <UserMenu />
 
               {/* Cambio de tema */}
               <ThemeSwitcher />
-              
-              {/* Menú de usuario */}
-              <UserMenu />
+
             </Box>
           ),
         }}
       >
-        <Box
-          sx={{
-            width: '100%',
-            p: 3,
-            bgcolor: 'background.default',
-          }}
-        >
-          {children}
-        </Box>
+        {children || <DemoPageContent pathname={router.pathname} />}
       </DashboardLayout>
     </AppProvider>
   );

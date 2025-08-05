@@ -100,13 +100,10 @@ function ThemeToggleInternal() {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 slotProps={{
-                    list: {
-                        'aria-labelledby': 'theme-button',
-                    },
                     paper: {
                         sx: {
                             minWidth: 160,
-                            mt: 1,
+                            mt: 1.7,
                         },
                     },
                 }}

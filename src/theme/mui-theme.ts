@@ -45,8 +45,6 @@ const baseTheme: ThemeOptions = {
         MuiPaper: {
             styleOverrides: {
                 root: {
-                    borderRadius: 12,
-                    // Evitar flash durante hidratación
                     transition: 'none',
                 },
             },
@@ -79,7 +77,7 @@ export const lightTheme = createTheme({
     palette: {
         mode: 'light',
         primary: {
-            main: '#2563eb',
+            main: '#000',
             light: '#3b82f6',
             dark: '#1d4ed8',
             contrastText: '#ffffff',
@@ -98,7 +96,7 @@ export const lightTheme = createTheme({
             primary: '#0f172a',
             secondary: '#64748b',
         },
-        divider: '#64748b',
+        divider: 'rgba(0, 0, 0, 0.12)',
         grey: {
             50: '#f8fafc',
             100: '#f1f5f9',
@@ -120,7 +118,7 @@ export const darkTheme = createTheme({
     palette: {
         mode: 'dark',
         primary: {
-            main: '#3b82f6',
+            main: '#fff',
             light: '#60a5fa',
             dark: '#2563eb',
             contrastText: '#ffffff',
@@ -132,14 +130,13 @@ export const darkTheme = createTheme({
             contrastText: '#000000',
         },
         background: {
-            default: '#0f172a',
-            paper: '#1e293b',
+            default: '#000',
         },
         text: {
             primary: '#f8fafc',
             secondary: '#cbd5e1',
         },
-        divider: '#cbd5e1',
+        divider: 'rgba(255, 255, 255, 0.08)',
         grey: {
             50: '#0f172a',
             100: '#1e293b',

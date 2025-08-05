@@ -28,7 +28,6 @@ export function LoginForm() {
         errors,
         loading,
         showPassword,
-        buttonText,
         
         // Acciones
         handleInputChange,
@@ -134,9 +133,11 @@ export function LoginForm() {
                             py: 1.5,
                             fontSize: '16px',
                             fontWeight: 'medium',
+                            backgroundColor: (theme) => theme.palette.mode === 'dark' ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.04)",
+                            color: (theme) => theme.palette.mode === 'dark' ? "#fff" : "#000",
                         }}
                     >
-                        {buttonText}
+                        Iniciar Sesión
                     </Button>
                 </Stack>
             </Box>

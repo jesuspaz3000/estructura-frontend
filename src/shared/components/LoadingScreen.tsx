@@ -1,4 +1,3 @@
-'use client';
 
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -32,7 +31,7 @@ export default function LoadingScreen({ onThemeReady }: LoadingScreenProps) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#0f172a', // Fondo oscuro fijo
+        backgroundColor: '#000', // Fondo oscuro fijo
         zIndex: 9999,
         transition: 'opacity 0.3s ease-out',
         opacity: isReady ? 0 : 1,

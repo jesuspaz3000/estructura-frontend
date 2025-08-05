@@ -18,21 +18,4 @@ body {
   font-family: inherit;
   /* Transición suave solo después del montaje inicial */
   transition: background-color 0.3s ease, color 0.3s ease;
-  background-color: inherit;
-  color: inherit;
-}
-
-/* Desactivar transiciones durante la carga inicial */
-html:not(.mounted) * {
-  transition: none !important;
-}
-
-/* Contenedor principal */
-#__next {
-  min-height: 100vh;
-}
-
-/* Clases utilitarias básicas para compatibilidad con Tailwind */
-.theme-transition {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
