@@ -146,7 +146,7 @@ function UserMenu() {
   const handleLogout = () => {
     handleClose();
     console.log('Logout clicked');
-    // TODO: Implementar lógica de logout test nuevo
+    // TODO: Implementar lógica de logout test nuevo otro
   };
 
   const handleSettings = () => {
