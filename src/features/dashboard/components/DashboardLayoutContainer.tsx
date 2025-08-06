@@ -146,7 +146,7 @@ function UserMenu() {
   const handleLogout = () => {
     handleClose();
     console.log('Logout clicked');
-    // TODO: Implementar lógica de logout con fe xd
+    // TODO: Implementar lógica de logout
   };
 
   const handleSettings = () => {
